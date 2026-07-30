@@ -1,0 +1,135 @@
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+45,
+window.innerWidth/window.innerHeight,
+1,
+1000
+);
+
+camera.position.z = 500;
+
+const renderer = new THREE.WebGLRenderer({
+antialias:true
+});
+
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+document.body.appendChild(renderer.domElement);
+
+const tl = gsap.timeline();
+
+const path = document.querySelector("path");
+
+const length = path.getTotalLength();
+
+const vertices = [];
+for (let i = 0; i < length; i += 0.1) {
+
+    const point = path.getPointAtLength(i);
+const vector = new THREE.Vector3(
+    point.x - 300,
+    -(point.y - 276),
+    0
+);
+
+    vector.x += (Math.random() - 0.5) * 30;
+    vector.y += (Math.random() - 0.5) * 30;
+    vector.z += (Math.random() - 0.5) * 70;
+
+    vertices.push(vector);
+
+    tl.from(
+        vector,
+        {
+            x:600/2,
+            y:-552/2,
+            z:0,
+            ease:"power2.inOut",
+            duration:"random(8,12)"
+        },
+        i*0.006
+    );
+
+}const geometry = new THREE.BufferGeometry();
+
+const positions = [];
+
+vertices.forEach((v)=>{
+
+    positions.push(v.x);
+    positions.push(v.y);
+    positions.push(v.z);
+
+});
+
+geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(
+        positions,
+        3
+    )
+);
+const material = new THREE.PointsMaterial({
+
+    color:0xff4da6,
+
+    size:3
+
+});
+
+const points = new THREE.Points(
+    geometry,
+    material
+);
+
+scene.add(points);
+function animate() {
+
+    requestAnimationFrame(animate);
+
+    const positionArray = geometry.attributes.position.array;
+
+    vertices.forEach((v, i) => {
+
+        positionArray[i * 3] = v.x;
+        positionArray[i * 3 + 1] = v.y;
+        positionArray[i * 3 + 2] = v.z;
+
+    });
+
+    geometry.attributes.position.needsUpdate = true;
+
+    renderer.render(scene, camera);
+
+}
+
+animate();
+const text = document.querySelector("#textSVG text");
+
+const textLength = text.getComputedTextLength();
+
+for(let i=0;i<textLength;i+=2){
+
+    const point = text.getPointAtLength(i);
+
+    textVertices.push(
+
+        new THREE.Vector3(
+            point.x-300,
+            -(point.y-100),
+            0
+        )
+
+    );
+
+}
+gsap.to("#signature",{
+    scale:1.08,
+    opacity:0.85,
+    duration:2,
+    repeat:-1,
+    yoyo:true,
+    ease:"sine.inOut"
+});

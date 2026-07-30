@@ -1,0 +1,24 @@
+body{
+margin:0;
+overflow:hidden;
+background:black;
+}
+#signature{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-family:"Brush Script MT", cursive;
+    font-size:90px;
+    font-family:"Brush Script MT", cursive;
+    font-weight:bold;
+    color:#00d9ff;
+    text-shadow:
+        0 0 8px #00d9ff,
+        0 0 20px #00d9ff,
+        0 0 40px #00d9ff,
+        0 0 80px #00d9ff;
+    pointer-events:none;
+    user-select:none;
+    z-index:10;
+}
